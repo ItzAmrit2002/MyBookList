@@ -26,7 +26,7 @@ class UI{
 
 
         row.innerHTML = `
-        <td>${book.title}</td>
+        <td class="book-name">${book.title}</td>
         <td>${book.author}</td>
         <td>${book.isbn}</td>
         <td><a href="#" class="btn btn-danger btn-sm delete">X</a></td>
@@ -101,6 +101,42 @@ class Store {
         localStorage.setItem('books', JSON.stringify(books))
     }
 }
+
+let search = document.getElementById('search');
+search.addEventListener('keyup', () => {
+    let filter = document.getElementById('search').value.toUpperCase();
+
+    let list1 = document.getElementById('myTable');
+
+    let elements = list1.getElementsByTagName('tr');
+    for(var i=0; i<elements.length; i++)
+    {
+        let a = elements[i].getElementsByTagName('td')[0]
+
+        if(a){
+            let textvalue = a.textContent || a.innerHTML
+
+            if(textvalue.toUpperCase().indexOf(filter) > -1){
+                elements[i].style.display = ""
+            }
+            else{
+                elements[i].style.display = 'none'
+            }
+        }
+    }
+
+    // elements.forEach((element)=>{
+    //     let a = element.getElementsByTagName('td')[0]
+    //     console.log(a)
+    //     if(a.innerHTML.toUpperCase().indexOf(filter) > -1)
+    //     {
+    //         element.style.visibility = ''
+    //     }
+    //     else{
+    //         element.style.visibility = 'none'
+    //     }
+    // })
+})
 
 
 document.addEventListener('DOMContentLoaded', UI.displayBooks);
